@@ -15,4 +15,29 @@ In this phase, we run the quantum simulator, and the amount of shots taken is gi
 In this phase, we take the normalized matrix of features $X$ and the normalized vector of training results $y$, we then go through each row in $X$ and repeat step 3 given the quantum circuit created in step 2 and the precision amount mentioned in step 3. This returns coefficients for each feature in the form of probabilities.
 
 ## Quantum vs. Classical Linear Regression
-We trained both models on the first 100 5-minute intervals of the TSLA stock to see how the open, high, and low values can predict the close value. We then 
+We trained both models on the first 100 5-minute intervals of the TSLA stock to see how the open, high, and low values can predict the close value. We then test both models on the next 100 5-minute intervals.
+### Accuracy Results:
+![Figure 1](https://github.com/williamesanders05/QLR/blob/main/figures/Figure_1.png?raw=true)
+### Time Complexity and Timing Results:
+Quantum Algorithm Time Complexity:
+
+$O({\kappa}^{3} \times polylog(\frac{d\kappa}{\epsilon}))$
+
+where:
+
+$\kappa =$ Condition number of $X$
+
+$d =$ Number of features
+
+$\epsilon =$ Desired precision
+
+Classical Algorithm Time Complexity:
+
+$O(d^{3} + Nd^{2})$
+
+where:
+
+$N =$ Number of rows in the dataset
+
+#### Here are the Tim results for training on 100 rows with 3 features and 1 target:
+![Figure 2](https://github.com/williamesanders05/QLR/blob/main/figures/Figure_2.png?raw=true)
