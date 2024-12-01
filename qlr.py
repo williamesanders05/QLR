@@ -9,6 +9,7 @@ from qiskit.primitives import Estimator
 import numpy as np
 import warnings
 from matplotlib import pyplot as plt
+import time
 
 # Ignore warnings
 warnings.filterwarnings("ignore")
@@ -126,15 +127,23 @@ def classical_least_squares_regression(data):
 if __name__ == "__main__":
     csv_file = "./data/tsla_5_minute.csv"
     normalized_data = load_and_normalize_data(csv_file)
+    quantum_start = time.time()
     probabilities = quantum_least_squares(normalized_data)
+    quantum_end = time.time()
+    quantum_time = quantum_end - quantum_start
     ## This algorithm is O(k^3 * polylog(dk/e))
     ## k = Condition number of the X
     ## d = Number of features
     ## e = Desired precision
     ## A traditional linear regression algorithm is O(d^3 + d^2 * N)
     ## N = number of rows in the dataset
-    normalized_data = load_and_normalize_data(csv_file)
+    classical_start = time.time()
     model = classical_least_squares_regression(normalized_data)
+    classical_end = time.time()
+    classical_time = classical_end - classical_start
+    plt.bar(['Quantum', 'Classical'], [quantum_time, classical_time])
+    plt.ylabel('Time (s)')
+    plt.show()
     
     # get dataframe which we have not trained on
     data = pd.read_csv(csv_file).head(100)
